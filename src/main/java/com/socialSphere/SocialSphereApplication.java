@@ -1,4 +1,4 @@
-package com.socialsphere.socialSphere;
+package com.socialSphere;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

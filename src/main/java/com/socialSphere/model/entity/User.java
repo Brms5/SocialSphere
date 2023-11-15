@@ -1,4 +1,4 @@
-package com.socialsphere.socialSphere.model.entity;
+package com.socialSphere.model.entity;
 
 import jakarta.persistence.*;
 

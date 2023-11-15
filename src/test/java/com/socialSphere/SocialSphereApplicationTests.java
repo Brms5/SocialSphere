@@ -1,4 +1,4 @@
-package com.socialsphere.socialSphere;
+package com.socialSphere;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
