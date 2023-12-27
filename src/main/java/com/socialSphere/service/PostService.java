@@ -27,7 +27,7 @@ public class PostService implements IPostService {
     public NewPostDto createNewPost(PostCreateDto postCreateDto) {
         var hasNullField = Validator.hasNullField(postCreateDto);
         if (hasNullField) {
-            throw new IllegalArgumentException("Post body cannot be null");
+            throw new IllegalArgumentException("Post fields cannot be null");
         }
 
         Post post = new Post(

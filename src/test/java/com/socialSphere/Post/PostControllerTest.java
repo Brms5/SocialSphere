@@ -47,7 +47,7 @@ public class PostControllerTest {
                 .status(Response.SC_CREATED)
                 .body(createdPost);
 
-        //Action
+        //Act
         Mockito.when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
         Mockito.when(postService.createNewPost(postBody)).thenReturn(createdPost);
         ResponseEntity<NewPostDto> postResponse = postController.createNewPost(postBody);
@@ -65,7 +65,7 @@ public class PostControllerTest {
                 .status(Response.SC_NOT_FOUND)
                 .build();
 
-        //Action
+        //Act
         ResponseEntity<NewPostDto> postResponse = postController.createNewPost(postBody);
 
         //Assert
