@@ -1,7 +1,10 @@
 package com.socialSphere.service;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
+import com.socialSphere.model.entity.User;
+import com.socialSphere.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import com.socialSphere.model.dto.Post.NewPostDto;
@@ -18,25 +21,24 @@ import jakarta.transaction.Transactional;
 public class PostService implements IPostService {
 
     private PostRepository postRepository;
+    private UserRepository userRepository;
 
     @Transactional
     public NewPostDto createNewPost(PostCreateDto postCreateDto) {
-
         var hasNullField = Validator.hasNullField(postCreateDto);
         if (hasNullField) {
-            throw new IllegalArgumentException("Post body cannot be null");
+            throw new IllegalArgumentException("Post fields cannot be null");
         }
 
         Post post = new Post(
-            postCreateDto.getDescription(),
-            postCreateDto.getImage(),
-            LocalDate.now(),
-            postCreateDto.getType(),
-            postCreateDto.getUserId()
+                postCreateDto.getDescription(),
+                postCreateDto.getImage(),
+                LocalDate.now(),
+                postCreateDto.getType(),
+                postCreateDto.getUserId()
         );
 
         Post newPost = postRepository.save(post);
         return new NewPostDto(newPost.getDescription(), newPost.getImage(), newPost.getDate(), newPost.getType());
     }
-    
 }

@@ -10,10 +10,24 @@ import java.util.UUID;
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="id", nullable = false, unique = true)
     private UUID id;
+
+    @Column(name="name", nullable = false, unique = false)
     private String name;
+
+    @Column(name="email", nullable = false, unique = true)
     private String email;
+
+    @Column(name="password", nullable = false, unique = false)
     private String password;
+
+    public User(UUID id, String name, String email, String password) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
 
     public UUID getId() {
         return id;

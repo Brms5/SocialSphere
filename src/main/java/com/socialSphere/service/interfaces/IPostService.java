@@ -5,6 +5,6 @@ import com.socialSphere.model.dto.Post.PostCreateDto;
 
 public interface IPostService {
     
-    public NewPostDto createNewPost(PostCreateDto postBodyDto);
+    public NewPostDto createNewPost(PostCreateDto postBodyDto) throws ClassNotFoundException;
 
 }

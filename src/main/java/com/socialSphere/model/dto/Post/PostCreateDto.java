@@ -17,11 +17,13 @@ public class PostCreateDto {
     public PostCreateDto(
         String description,
         String image,
-        PostType type
+        PostType type,
+        UUID userId
     ) {
         this.description = description;
         this.image = image;
         this.type = type;
+        this.userId = userId;
     }
 
     public String getDescription() {
