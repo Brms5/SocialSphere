@@ -32,33 +32,44 @@ public class PostServiceTest {
     @Test
     public void createNewPostSuccessfully() {
         //Arrange
-        PostCreateDto postBody = PostFactory.createPostDto();
         User user = UserFactory.newUser();
+        PostCreateDto postBody = PostFactory.createPostDto();
         postBody.setUserId(user.getId());
 
+        Post savedPost = PostFactory.createPost();
+        savedPost.setUserId(user.getId());
+
         //Act
-        Mockito.when(postRepository.save(Mockito.any(Post.class))).then(returnsFirstArg());
+        Mockito.when(postRepository.save(Mockito.any(Post.class))).thenReturn(savedPost);
         NewPostDto newPost = postService.createNewPost(postBody);
 
         //Assert
         Assertions.assertNotNull(newPost);
-        Assertions.assertEquals(postBody.getDescription(), newPost.getDescription());
+
+        Assertions.assertEquals(postBody.getDescription(), savedPost.getDescription());
         Assertions.assertEquals(postBody.getImage(), newPost.getImage());
         Assertions.assertEquals(postBody.getType(), newPost.getType());
+
+        Assertions.assertEquals(savedPost.getDescription(), postBody.getDescription());
+        Assertions.assertEquals(savedPost.getImage(), postBody.getImage());
+        Assertions.assertEquals(savedPost.getType(), postBody.getType());
+        Assertions.assertEquals(savedPost.getUserId(), postBody.getUserId());
+
+        Assertions.assertEquals(savedPost.getDescription(), newPost.getDescription());
+        Assertions.assertEquals(savedPost.getImage(), newPost.getImage());
+        Assertions.assertEquals(savedPost.getType(), newPost.getType());
     }
 
     @Test
     public void createNewPostNullDescription() {
         //Arrange
-        PostCreateDto postBody = PostFactory.createPostDto();
         User user = UserFactory.newUser();
+
+        PostCreateDto postBody = PostFactory.createPostDto();
         postBody.setUserId(user.getId());
         postBody.setDescription(null);
 
-        //Act
-        Mockito.when(postRepository.save(Mockito.any(Post.class))).then(returnsFirstArg());
-
-        //Assert
+        //Act and Assert
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             postService.createNewPost(postBody);
         }, "Post fields cannot be null");
@@ -67,15 +78,13 @@ public class PostServiceTest {
     @Test
     public void createNewPostNullImage() {
         //Arrange
-        PostCreateDto postBody = PostFactory.createPostDto();
         User user = UserFactory.newUser();
+
+        PostCreateDto postBody = PostFactory.createPostDto();
         postBody.setUserId(user.getId());
         postBody.setImage(null);
 
-        //Act
-        Mockito.when(postRepository.save(Mockito.any(Post.class))).then(returnsFirstArg());
-
-        //Assert
+        //Act and Assert
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             postService.createNewPost(postBody);
         }, "Post fields cannot be null");
@@ -84,15 +93,13 @@ public class PostServiceTest {
     @Test
     public void createNewPostNullType() {
         //Arrange
-        PostCreateDto postBody = PostFactory.createPostDto();
         User user = UserFactory.newUser();
+
+        PostCreateDto postBody = PostFactory.createPostDto();
         postBody.setUserId(user.getId());
         postBody.setType(null);
 
-        //Act
-        Mockito.when(postRepository.save(Mockito.any(Post.class))).then(returnsFirstArg());
-
-        //Assert
+        //Act and Assert
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             postService.createNewPost(postBody);
         }, "Post fields cannot be null");
@@ -104,10 +111,7 @@ public class PostServiceTest {
         PostCreateDto postBody = PostFactory.createPostDto();
         postBody.setUserId(null);
 
-        //Act
-        Mockito.when(postRepository.save(Mockito.any(Post.class))).then(returnsFirstArg());
-
-        //Assert
+        //Act and Assert
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             postService.createNewPost(postBody);
         }, "Post fields cannot be null");
