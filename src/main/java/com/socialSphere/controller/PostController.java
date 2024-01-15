@@ -18,14 +18,14 @@ import com.socialSphere.service.PostService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/post")
 public class PostController {
 
     private PostService postService;
 
     private UserRepository userRepository;
 
-    @PostMapping("/post")
+    @PostMapping("/create")
     public ResponseEntity<NewPostDto> createNewPost(@RequestBody @Valid PostCreateDto postCreateDto) {
         Optional<User> user = userRepository.findById(postCreateDto.getUserId());
         if (user.isEmpty()) {

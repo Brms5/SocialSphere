@@ -1,20 +1,35 @@
 package com.socialSphere.model.entity;
 
+import com.socialSphere.util.Enum.UserRole;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
-@Entity
 @Table(name = "users")
-public class User implements Serializable {
+@Entity(name = "users")
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(of = "id")
+public class User implements Serializable, UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="id", nullable = false, unique = true)
     private UUID id;
 
-    @Column(name="name", nullable = false, unique = false)
-    private String name;
+    @Column(name="username", nullable = false, unique = false)
+    private String username;
 
     @Column(name="email", nullable = false, unique = true)
     private String email;
@@ -22,42 +37,49 @@ public class User implements Serializable {
     @Column(name="password", nullable = false, unique = false)
     private String password;
 
-    public User(UUID id, String name, String email, String password) {
-        this.id = id;
-        this.name = name;
+    @Enumerated(EnumType.STRING)
+    @Column(name="role", nullable = false, unique = false)
+    private UserRole role;
+
+    public User(String name, String email, String password, UserRole role) {
+        this.username = name;
         this.email = email;
         this.password = password;
+        this.role = role;
     }
 
-    public UUID getId() {
-        return id;
+    // Retorna a lista de permissões do usuário
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if (this.role == UserRole.ADMIN)
+            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+        else
+            return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
+    @Override
+    public String getUsername() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
     }
 
-    public String getPassword() {
-        return password;
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
     }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
 }
