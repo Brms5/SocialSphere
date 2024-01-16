@@ -3,6 +3,7 @@ package com.socialSphere.User;
 import com.socialSphere.model.entity.User;
 import com.socialSphere.util.Enum.UserRole;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class UserFactory {
@@ -12,7 +13,8 @@ public class UserFactory {
                 "Test",
                 "test@email.com",
                 "test123",
-                UserRole.USER
+                UserRole.USER,
+                new ArrayList<User>()
         );
     }
 }

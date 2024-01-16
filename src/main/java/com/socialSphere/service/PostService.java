@@ -1,9 +1,7 @@
 package com.socialSphere.service;
 
 import java.time.LocalDate;
-import java.util.Optional;
 
-import com.socialSphere.model.entity.User;
 import com.socialSphere.repository.UserRepository;
 import org.springframework.stereotype.Service;
 

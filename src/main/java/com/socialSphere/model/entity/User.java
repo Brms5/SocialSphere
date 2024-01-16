@@ -1,16 +1,20 @@
 package com.socialSphere.model.entity;
 
 import com.socialSphere.util.Enum.UserRole;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
@@ -40,6 +44,12 @@ public class User implements Serializable, UserDetails {
     @Enumerated(EnumType.STRING)
     @Column(name="role", nullable = false, unique = false)
     private UserRole role;
+
+    @OneToMany
+    @Fetch(FetchMode.JOIN)
+    @Nullable
+    @Column
+    private List<User> friends = new ArrayList<>();
 
     public User(String name, String email, String password, UserRole role) {
         this.username = name;
