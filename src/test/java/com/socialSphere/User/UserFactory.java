@@ -1,6 +1,7 @@
 package com.socialSphere.User;
 
 import com.socialSphere.model.entity.User;
+import com.socialSphere.util.Enum.UserRole;
 
 import java.util.UUID;
 
@@ -10,7 +11,8 @@ public class UserFactory {
                 UUID.randomUUID(),
                 "Test",
                 "test@email.com",
-                "test123"
+                "test123",
+                UserRole.USER
         );
     }
 }
