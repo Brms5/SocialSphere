@@ -22,14 +22,16 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/post")
 public class PostController {
 
+    @Autowired
     private PostService postService;
 
     @Autowired
     private PostRepository postRepository;
 
+    @Autowired
     private UserRepository userRepository;
 
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<NewPostDto> createNewPost(@RequestBody @Valid PostCreateDto postCreateDto) {
         Optional<User> user = userRepository.findById(postCreateDto.getUserId());
         if (user.isEmpty()) {
