@@ -3,6 +3,7 @@ package com.socialSphere.service;
 import java.time.LocalDate;
 
 import com.socialSphere.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.socialSphere.model.dto.Post.NewPostDto;
@@ -18,7 +19,9 @@ import jakarta.transaction.Transactional;
 @Transactional
 public class PostService implements IPostService {
 
+    @Autowired
     private PostRepository postRepository;
+
     private UserRepository userRepository;
 
     @Transactional

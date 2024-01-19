@@ -31,20 +31,20 @@ public class Post implements Serializable {
     @Column(name="id", nullable = false, unique = true)
     private UUID id;
 
-    @Column(name="description", nullable = false, unique = true)
+    @Column(name="description", nullable = false, unique = false)
     private String description;
 
-    @Column(name="image", nullable = false, unique = true)
+    @Column(name="image", nullable = false)
     private String image;
 
-    @Column(name="date", nullable = false, unique = false)
+    @Column(name="date", nullable = false)
     private LocalDate date;
 
     @Enumerated(EnumType.STRING)
-    @Column(name="type", nullable = false, unique = false)
+    @Column(name="type", nullable = false)
     private PostType type;
 
-    @Column(name="user_id", nullable = false, unique = false)
+    @Column(name="user_id", nullable = false)
     private UUID userId;
 
     // Construtor
