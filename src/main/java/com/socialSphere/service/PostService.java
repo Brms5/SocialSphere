@@ -22,6 +22,7 @@ public class PostService implements IPostService {
     @Autowired
     private PostRepository postRepository;
 
+    @Autowired
     private UserRepository userRepository;
 
     @Transactional

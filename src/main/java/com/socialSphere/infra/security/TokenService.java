@@ -25,6 +25,7 @@ public class TokenService {
             String token = JWT.create()
                     .withIssuer("sphere")
                     .withSubject(user.getEmail())
+                    .withClaim("id", user.getId().toString())
                     .withExpiresAt(getExpirationDate())
                     .sign(algorithm);
             return token;
