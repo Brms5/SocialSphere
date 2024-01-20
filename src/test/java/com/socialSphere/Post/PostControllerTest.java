@@ -40,7 +40,6 @@ public class PostControllerTest {
         //Arrange
         PostCreateDto postBody = PostFactory.createPostDto();
         User user = UserFactory.newUser();
-        postBody.setUserId(user.getId());
 
         NewPostDto createdPost = PostFactory.createNewPostDto();
         ResponseEntity<NewPostDto> expectedResponse = ResponseEntity
@@ -49,11 +48,10 @@ public class PostControllerTest {
 
         //Act
         Mockito.when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
-        Mockito.when(postService.createNewPost(postBody)).thenReturn(createdPost);
+        Mockito.when(postService.createNewPost(postBody, user.getId())).thenReturn(createdPost);
         ResponseEntity<NewPostDto> postResponse = postController.createNewPost(postBody);
 
         //Assert
-        Assertions.assertEquals(postBody.getUserId(), user.getId());
         Assertions.assertEquals(expectedResponse, postResponse);
     }
 

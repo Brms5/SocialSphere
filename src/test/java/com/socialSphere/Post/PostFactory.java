@@ -14,8 +14,7 @@ public class PostFactory {
         return new PostCreateDto(
                 "desciption",
                 "image.jpg",
-                PostType.NORMAL,
-                UUID.randomUUID()
+                PostType.NORMAL
         );
     }
 
