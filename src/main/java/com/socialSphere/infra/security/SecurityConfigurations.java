@@ -32,6 +32,8 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/users").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/users/friendship").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/api/users/friendship").authenticated()
                         .requestMatchers(HttpMethod.POST, "/api/post").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/post/{id}").permitAll()
                         .anyRequest().authenticated());
