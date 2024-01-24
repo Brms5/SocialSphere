@@ -8,6 +8,7 @@ import com.socialSphere.repository.PostRepository;
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import com.socialSphere.model.dto.Post.NewPostDto;
@@ -33,13 +34,10 @@ public class PostController {
 
     @PostMapping
     public ResponseEntity<NewPostDto> createNewPost(@RequestBody @Valid PostCreateDto postCreateDto) {
-        Optional<User> user = userRepository.findById(postCreateDto.getUserId());
-        if (user.isEmpty()) {
-            return ResponseEntity.status(Response.SC_NOT_FOUND).build();
-        }
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UUID userId = user.getId();
 
-        postCreateDto.setUserId(user.get().getId());
-        return ResponseEntity.status(Response.SC_CREATED).body(postService.createNewPost(postCreateDto));
+        return ResponseEntity.status(Response.SC_CREATED).body(postService.createNewPost(postCreateDto, userId));
     }
 
     @GetMapping("/{id}")

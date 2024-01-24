@@ -34,14 +34,13 @@ public class PostServiceTest {
         //Arrange
         User user = UserFactory.newUser();
         PostCreateDto postBody = PostFactory.createPostDto();
-        postBody.setUserId(user.getId());
 
         Post savedPost = PostFactory.createPost();
         savedPost.setUserId(user.getId());
 
         //Act
         Mockito.when(postRepository.save(Mockito.any(Post.class))).thenReturn(savedPost);
-        NewPostDto newPost = postService.createNewPost(postBody);
+        NewPostDto newPost = postService.createNewPost(postBody, user.getId());
 
         //Assert
         Assertions.assertNotNull(newPost);
@@ -53,7 +52,6 @@ public class PostServiceTest {
         Assertions.assertEquals(savedPost.getDescription(), postBody.getDescription());
         Assertions.assertEquals(savedPost.getImage(), postBody.getImage());
         Assertions.assertEquals(savedPost.getType(), postBody.getType());
-        Assertions.assertEquals(savedPost.getUserId(), postBody.getUserId());
 
         Assertions.assertEquals(savedPost.getDescription(), newPost.getDescription());
         Assertions.assertEquals(savedPost.getImage(), newPost.getImage());
@@ -66,12 +64,11 @@ public class PostServiceTest {
         User user = UserFactory.newUser();
 
         PostCreateDto postBody = PostFactory.createPostDto();
-        postBody.setUserId(user.getId());
         postBody.setDescription(null);
 
         //Act and Assert
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            postService.createNewPost(postBody);
+            postService.createNewPost(postBody, user.getId());
         }, "Post fields cannot be null");
     }
 
@@ -81,12 +78,11 @@ public class PostServiceTest {
         User user = UserFactory.newUser();
 
         PostCreateDto postBody = PostFactory.createPostDto();
-        postBody.setUserId(user.getId());
         postBody.setImage(null);
 
         //Act and Assert
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            postService.createNewPost(postBody);
+            postService.createNewPost(postBody, user.getId());
         }, "Post fields cannot be null");
     }
 
@@ -96,24 +92,11 @@ public class PostServiceTest {
         User user = UserFactory.newUser();
 
         PostCreateDto postBody = PostFactory.createPostDto();
-        postBody.setUserId(user.getId());
         postBody.setType(null);
 
         //Act and Assert
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            postService.createNewPost(postBody);
-        }, "Post fields cannot be null");
-    }
-
-    @Test
-    public void createNewPostNullUserId() {
-        //Arrange
-        PostCreateDto postBody = PostFactory.createPostDto();
-        postBody.setUserId(null);
-
-        //Act and Assert
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            postService.createNewPost(postBody);
+            postService.createNewPost(postBody, user.getId());
         }, "Post fields cannot be null");
     }
 }

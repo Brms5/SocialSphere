@@ -12,18 +12,14 @@ public class PostCreateDto {
 
     private PostType type;
 
-    private UUID userId;
-
     public PostCreateDto(
         String description,
         String image,
-        PostType type,
-        UUID userId
+        PostType type
     ) {
         this.description = description;
         this.image = image;
         this.type = type;
-        this.userId = userId;
     }
 
     public String getDescription() {
@@ -49,13 +45,4 @@ public class PostCreateDto {
     public void setType(PostType type) {
         this.type = type;
     }
-
-    public UUID getUserId() {
-        return this.userId;
-    }
-
-    public void setUserId(UUID userId) {
-        this.userId = userId;
-    }
-
 }

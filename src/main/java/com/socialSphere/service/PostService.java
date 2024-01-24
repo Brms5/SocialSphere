@@ -1,6 +1,7 @@
 package com.socialSphere.service;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 import com.socialSphere.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class PostService implements IPostService {
     private UserRepository userRepository;
 
     @Transactional
-    public NewPostDto createNewPost(PostCreateDto postCreateDto) {
+    public NewPostDto createNewPost(PostCreateDto postCreateDto, UUID userId) {
         var hasNullField = Validator.hasNullField(postCreateDto);
         if (hasNullField) {
             throw new IllegalArgumentException("Post fields cannot be null");
@@ -37,7 +38,7 @@ public class PostService implements IPostService {
                 postCreateDto.getImage(),
                 LocalDate.now(),
                 postCreateDto.getType(),
-                postCreateDto.getUserId()
+                userId
         );
 
         Post newPost = postRepository.save(post);
